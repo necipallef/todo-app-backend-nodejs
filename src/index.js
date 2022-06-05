@@ -3,16 +3,21 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import { router as sessionRouter } from './handlers/session.handler.js'
 import { contentTypeJSONMiddleware } from './middlewares/contentTypeJSON.middleware.js'
+import { connectDB } from './db/sequelize.js'
+import { router as userRouter } from './handlers/user.handler.js'
 
 dotenv.config()
+
+await connectDB()
 
 const app = new express()
 
 app.use(express.json())
 app.use(cors())
-app.use(contentTypeJSONMiddleware())
+// app.use(contentTypeJSONMiddleware())
 
 app.use('/session', sessionRouter)
+app.use('/user', userRouter)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {

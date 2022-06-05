@@ -1,8 +1,10 @@
 import { Router } from 'express'
+import { UserEntity } from '../db/entities/userEntity.js'
+import { sign } from '../utils/jwt.js'
 
 export const router = new Router()
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const username = req.body.username
   const password = req.body.password
   if (!username || !password) {
@@ -11,11 +13,27 @@ router.post('/', (req, res) => {
     return
   }
 
-  if (username !== 'admin' || password !== '123456') {
+  const userEntity = await UserEntity.findOne({ where: { username } })
+  if (!userEntity) {
     res.status(401).end()
 
     return
   }
 
-  res.json({ jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' })
+  if (password !== userEntity.password) {
+    res.status(401).end()
+
+    return
+  }
+
+  const userInfo = {
+    username,
+    nameSurname: userEntity.nameSurname,
+  }
+
+  const resBody = {
+    jwt: sign({ userInfo }),
+  }
+
+  res.json(resBody)
 })
