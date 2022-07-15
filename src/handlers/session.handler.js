@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
 
   const resBody = {
     jwt: sign({ userInfo }),
+    user: userInfo,
   }
 
   res.json(resBody)
