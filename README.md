@@ -64,15 +64,37 @@ Requires: Authentication (if fails HTTP 401)
 
 Request:
 ```shell
+curl -i -X POST http://<ENTER_HOST_HERE>/todo -d'{"title": "title", "details": "details"}'
+```
+
+Response: HTTP 201
+
+#### Get Todo
+
+Requires: Authentication (if fails HTTP 401)
+
+Request:
+```shell
 curl -i http://<ENTER_HOST_HERE>/todo
 ```
 
 Response: HTTP 200
 ```
-{
+[{
     "title":string,
     "details":string
-}
+}]
 ```
 
-Response: HTTP 201
+#### Delete Todo
+
+Requires: Authentication (if fails HTTP 401)
+
+Request:
+```shell
+curl -i -X DELETE http://<ENTER_HOST_HERE>/todo/:id
+```
+
+Response: HTTP 404
+
+Response: HTTP 200

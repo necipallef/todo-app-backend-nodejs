@@ -21,6 +21,24 @@ router.post('/', authenticationMiddleware(), async (req, res) => {
 
 router.get('/', authenticationMiddleware(), async (req, res) => {
   const userInfo = req.authentication.userToken.userInfo
-  const todoList = await TodoEntity.findAll({where: {userId: userInfo.id}})
-  res.json({data: todoList})
+  const todoList = await TodoEntity.findAll({ where: { userId: userInfo.id } })
+  res.json({ data: todoList })
+})
+
+router.delete('/:id', authenticationMiddleware(), async (req, res) => {
+  const { id: userId } = req.authentication.userToken.userInfo
+  const todoEntityId = req.params.id
+  const todoEntity = await TodoEntity.findByPk(todoEntityId)
+  if (!todoEntity) {
+    res.status(404).end()
+    return
+  }
+
+  if (todoEntity.userId !== userId) {
+    res.status(404).end()
+    return
+  }
+
+  await todoEntity.destroy();
+  res.status(200).end()
 })
