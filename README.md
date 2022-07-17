@@ -55,3 +55,24 @@ curl -i -X POST http://<ENTER_HOST_HERE>/user -d'{"username" : "admin", "passwor
 
 Response: HTTP 201
 Response: HTTP 409
+
+### Todo APIs
+
+#### Create Todo
+
+Requires: Authentication (if fails HTTP 401)
+
+Request:
+```shell
+curl -i http://<ENTER_HOST_HERE>/todo
+```
+
+Response: HTTP 200
+```
+{
+    "title":string,
+    "details":string
+}
+```
+
+Response: HTTP 201

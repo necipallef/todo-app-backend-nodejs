@@ -27,6 +27,7 @@ router.post('/', async (req, res) => {
   }
 
   const userInfo = {
+    id: userEntity.id,
     username,
     nameSurname: userEntity.nameSurname,
   }
