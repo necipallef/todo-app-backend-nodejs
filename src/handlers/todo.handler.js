@@ -7,6 +7,8 @@ export const router = new Router()
 router.post('/', authenticationMiddleware(), async (req, res) => {
   const title = req.body.title
   const details = req.body.details
+  const dueDatetime = req.body.dueDatetime
+  const reminder = req.body.reminder
 
   const userInfo = req.authentication.userToken.userInfo
 
@@ -14,6 +16,8 @@ router.post('/', authenticationMiddleware(), async (req, res) => {
     userId: userInfo.id,
     title,
     details,
+    dueDatetime,
+    reminder,
   })
 
   res.status(201).end()

@@ -7,5 +7,7 @@ export function initTodoEntity(sequelize) {
   return TodoEntity.init({
     title: DataTypes.STRING,
     details: DataTypes.STRING,
-  }, {sequelize, modelName: 'Todo'})
+    dueDatetime: DataTypes.STRING,
+    reminder: DataTypes.BOOLEAN,
+  }, { sequelize, modelName: 'Todo' })
 }
