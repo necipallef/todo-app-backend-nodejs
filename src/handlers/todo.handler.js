@@ -12,7 +12,7 @@ router.post('/', authenticationMiddleware(), async (req, res) => {
 
   const userInfo = req.authentication.userToken.userInfo
 
-  await TodoEntity.create({
+  const todoEntity = await TodoEntity.create({
     userId: userInfo.id,
     title,
     details,
@@ -20,7 +20,7 @@ router.post('/', authenticationMiddleware(), async (req, res) => {
     reminder,
   })
 
-  res.status(201).end()
+  res.json({data: todoEntity})
 })
 
 router.get('/', authenticationMiddleware(), async (req, res) => {
